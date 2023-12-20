@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class C3p0ConnectionsPool {
     private static ComboPooledDataSource pool =
             new ComboPooledDataSource();
-
+    private C3p0ConnectionsPool(){}
     // static {
         // програмные настройки
         // pool.setUser("username");
