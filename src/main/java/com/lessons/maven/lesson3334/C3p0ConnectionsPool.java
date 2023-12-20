@@ -1,4 +1,4 @@
-package com.lessons.maven.lesson33;
+package com.lessons.maven.lesson3334;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 

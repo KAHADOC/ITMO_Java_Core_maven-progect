@@ -1,4 +1,4 @@
-package com.lessons.maven.lesson33;
+package com.lessons.maven.lesson3334;
 
 import java.time.LocalDate;
 import java.util.UUID;

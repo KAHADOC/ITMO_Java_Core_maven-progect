@@ -1,4 +1,4 @@
-package com.lessons.maven.lesson33;
+package com.lessons.maven.lesson3334;
 
 import java.sql.Connection;
 import java.sql.SQLException;
