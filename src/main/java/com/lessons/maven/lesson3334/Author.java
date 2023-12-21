@@ -1,16 +1,21 @@
-package com.lessons.maven.lesson33;
+package com.lessons.maven.lesson3334;
 
 import java.time.LocalDate;
 
 public class Author {
     private final String uniqueName;
     private final LocalDate registeredAt;
-    private boolean isActive;
+    private boolean isActive = true;
 
     public Author(String uniqueName, LocalDate registeredAt, boolean isActive) {
         this.uniqueName = uniqueName;
         this.registeredAt = registeredAt;
         this.isActive = isActive;
+    }
+
+    public Author(String uniqueName) {
+        this.uniqueName = uniqueName;
+        registeredAt = LocalDate.now();
     }
 
     public String getUniqueName() {
