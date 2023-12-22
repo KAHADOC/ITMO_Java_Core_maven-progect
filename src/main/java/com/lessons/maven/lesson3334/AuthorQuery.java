@@ -44,6 +44,22 @@ public class AuthorQuery {
         return true;
     }
 
+    public int[] insertAllIntoTable(List<Author> authors) {
+        String insertSQl = "INSERT INTO tb_authors (unique_name) VALUES(?)";
+
+        try (PreparedStatement statement = C3p0ConnectionsPool.getConnectionFromPool()
+                .prepareStatement(insertSQl)) {
+            for (Author author : authors) {
+                statement.setString(1, author.getUniqueName());
+                statement.addBatch();
+            }
+            int[] result = statement.executeBatch();
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public int insertIntoTable(Author author) {
         String insertSQl = "INSERT INTO tb_authors (unique_name) VALUES(?)";
         try {
@@ -82,20 +98,20 @@ public class AuthorQuery {
                 statement.setString(2, author.getUniqueName());
                 return statement.executeUpdate();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<Author> getAllAuthors(){
+    public List<Author> getAllAuthors() {
         String selectSql = "SELECT unique_name, " +
                 "registered_at AS registered, is_active " +
                 "FROM tb_authors";
         List<Author> authors = new ArrayList<>();
         try (Statement statement = C3p0ConnectionsPool
-                .getConnectionFromPool().createStatement()){
+                .getConnectionFromPool().createStatement()) {
             ResultSet resultSet = statement.executeQuery(selectSql);
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 String uniqueName = resultSet.getString("unique_name");
                 LocalDate registeredAt = resultSet.getObject("registered", LocalDate.class);
                 boolean isActive = resultSet.getBoolean("is_active");
@@ -103,23 +119,23 @@ public class AuthorQuery {
                 authors.add(author);
             }
             return authors;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public List<String> getActiveAuthorsByRegisteredAt(
             LocalDate localDate
-    ){
+    ) {
         String selectSql = "SELECT unique_name FROM tb_authors " +
                 "WHERE is_active = true AND registered_at < ?";
         List<String> strings = new ArrayList<>();
         try (PreparedStatement statement = C3p0ConnectionsPool
                 .getConnectionFromPool()
-                .prepareStatement(selectSql)){
+                .prepareStatement(selectSql)) {
             statement.setObject(1, localDate);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 strings.add(resultSet.getString("unique_name"));
             }
             return strings;
