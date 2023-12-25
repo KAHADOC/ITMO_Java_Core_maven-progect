@@ -1,8 +1,16 @@
 package com.lessons.maven.lesson3334;
+// JPA
+// Hibernate
+// - пул соединений
+// - jdbc + driver
+// EclipseLink
+
+
 
 import java.time.*;
 
 public class Note {
+
     private long id;
     private String title;
     private String text;
